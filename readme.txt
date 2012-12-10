@@ -14,28 +14,28 @@ A WordPress Project Management plugin. Manage your project simply with the *righ
 
 A WordPress Project Management plugin. Manage your project simply with the \*right\* tools and options. It gives you the test of basecamp, just inside your loved WordPress.
 
-= Features =  
- * Projects  
-   * Create a new project  
-   * Set title and details of that project  
-   * Assign users for that project  
- * Messages  
-   * Messages are used for discussing about the project with co-workers of  that project  
-   * You can add attachments on messages  
-   * Comments can be made for discussion  
- * To-do List  
-   * Add as many to-do list as you want with title and description  
-   * Add tasks, assign users, assign due date  
-   * See progressbar on the list  
-   * Add comments on individual to-do lists and to-do's  
-   * Mark to-do as complete/incomplete  
- * Milestone  
-   * Create milestone  
-   * Assign messages and to-do list on milestone  
-   * 3 types of milestones are there, a) upcoming, b) completed and c) late milstone  
- * Files  
+= Features =
+ * Projects
+   * Create a new project
+   * Set title and details of that project
+   * Assign users for that project
+ * Messages
+   * Messages are used for discussing about the project with co-workers of  that project
+   * You can add attachments on messages
+   * Comments can be made for discussion
+ * To-do List
+   * Add as many to-do list as you want with title and description
+   * Add tasks, assign users, assign due date
+   * See progressbar on the list
+   * Add comments on individual to-do lists and to-do's
+   * Mark to-do as complete/incomplete
+ * Milestone
+   * Create milestone
+   * Assign messages and to-do list on milestone
+   * 3 types of milestones are there, a) upcoming, b) completed and c) late milstone
+ * Files
    * See all the uploaded files on messages and comments in one place and navigate to invidual attached threads.
-   
+
 = Demo Video =
 [youtube http://www.youtube.com/watch?v=lR61ARrGb28]
 
@@ -86,6 +86,11 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 = 0.1 =
 Initial version released
+
+= 0.2 =
+
+* Remove comments from listing publicly
+* Post types are hidden from search
 
 
 == Upgrade Notice ==
