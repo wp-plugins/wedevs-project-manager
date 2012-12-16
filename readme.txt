@@ -84,13 +84,18 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 == Changelog ==
 
-= 0.1 =
-Initial version released
+
+= 0.2.1 =
+
+* Comments display error fix
 
 = 0.2 =
 
 * Remove comments from listing publicly
 * Post types are hidden from search
+
+= 0.1 =
+Initial version released
 
 
 == Upgrade Notice ==
