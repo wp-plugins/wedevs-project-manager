@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file contains all the functions that are responsible for
+ * generating repeated HTML markups.
+ *
+ * @since 0.1
+ * @package CPM
+ */
 
 /**
  * HTML generator for single task
@@ -348,6 +355,15 @@ function cpm_comment_form( $project_id, $object_id = 0, $comment = null ) {
     return ob_get_clean();
 }
 
+/**
+ * Generates markup for displaying a single comment
+ *
+ * @since 0.1
+ * @param object $comment
+ * @param int $project_id
+ * @param string $class
+ * @return string
+ */
 function cpm_show_comment( $comment, $project_id, $class = '' ) {
 
     $class = empty( $class ) ? '' : ' ' . $class;
@@ -380,7 +396,7 @@ function cpm_show_comment( $comment, $project_id, $class = '' ) {
             <div class="cpm-comment-content">
                 <?php echo comment_text( $comment->comment_ID ); ?>
 
-                <?php echo cpm_show_attachments( $comment ); ?>
+                <?php echo cpm_show_attachments( $comment, $project_id ); ?>
             </div>
 
             <div class="cpm-comment-edit-form"></div>
@@ -391,15 +407,32 @@ function cpm_show_comment( $comment, $project_id, $class = '' ) {
     return ob_get_clean();
 }
 
-function cpm_show_attachments( $object ) {
+/**
+ * Helper function for displaying all the attachments for a single comment,
+ * messages, and etc.
+ *
+ * @since 0.1
+ * @param object $object
+ * @return string
+ */
+function cpm_show_attachments( $object, $project_id ) {
     ob_start();
+
+    $base_url = admin_url('admin-ajax.php?action=cpm_file_get');
 
     if ( $object->files ) {
         ?>
         <ul class="cpm-attachments">
             <?php
             foreach ($object->files as $file) {
-                printf( '<li><a href="%s" target="_blank"><img src="%s" /></a></li>', $file['url'], $file['thumb'] );
+                if( $file['type'] == 'image' ) {
+                    $thumb_url = sprintf( '%s&file_id=%d&project_id=%d&type=thumb', $base_url, $file['id'], $project_id );
+                } else {
+                    $thumb_url = $file['thumb'];
+                }
+
+                $file_url = sprintf( '%s&file_id=%d&project_id=%d', $base_url, $file['id'], $project_id );
+                printf( '<li><a href="%s" target="_blank"><img src="%s" /></a></li>', $file_url, $thumb_url );
             }
             ?>
         </ul>
@@ -409,6 +442,13 @@ function cpm_show_attachments( $object ) {
     return ob_get_clean();
 }
 
+/**
+ * Generates message new/edit form
+ *
+ * @param int $project_id
+ * @param object|null $message
+ * @return string
+ */
 function cpm_message_form( $project_id, $message = null ) {
     $title = $content = '';
     $submit = __( 'Add Message', 'cpm' );
@@ -477,6 +517,14 @@ function cpm_message_form( $project_id, $message = null ) {
     return ob_get_clean();
 }
 
+/**
+ * Generates milestone new/edit form
+ *
+ * @since 0.1
+ * @param int $project_id
+ * @param object|null $milestone
+ * @return string
+ */
 function cpm_milestone_form( $project_id, $milestone = null ) {
     $title = $content = '';
     $submit = __( 'Add Milestone', 'cpm' );
@@ -534,6 +582,13 @@ function cpm_milestone_form( $project_id, $milestone = null ) {
     return ob_get_clean();
 }
 
+/**
+ * Generates markup for a single milestone
+ *
+ * @since 0.1
+ * @param object $milestone
+ * @param int $project_id
+ */
 function cpm_show_milestone( $milestone, $project_id ) {
     $milestone_obj = CPM_Milestone::getInstance();
     $task_obj = CPM_Task::getInstance();
@@ -565,7 +620,7 @@ function cpm_show_milestone( $milestone, $project_id ) {
                     <li>
                         <a class="cpm-icon-delete cpm-milestone-delete" <?php cpm_data_attr( array( 'project' => $project_id, 'id' => $milestone->ID, 'confirm' => __( 'Are you sure?', 'cpm' ) ) ); ?> title="<?php esc_attr_e( 'Delete milestone', 'cpm' ); ?>" href="#"><span><?php _e( 'Delete', 'cpm' ); ?></span></a>
                     </li>
-                    
+
                     <?php if ( $milestone->completed == '0' ) { ?>
                         <li><a class="cpm-icon-tick grey cpm-milestone-complete" data-project="<?php echo $project_id; ?>" data-id="<?php echo esc_attr( $milestone->ID ); ?>" title="<?php esc_attr_e( 'Mark as complete', 'cpm' ); ?>" href="#"><span><?php _e( 'Mark as complete', 'cpm' ); ?></span></a></li>
                     <?php } else { ?>
@@ -630,7 +685,12 @@ function cpm_show_milestone( $milestone, $project_id ) {
     <?php
 }
 
-
+/**
+ * Generates markup for add/edit project form
+ *
+ * @since 0.1
+ * @param object|null $project
+ */
 function cpm_project_form( $project = null ) {
     $name = $details = '';
     $users = array();

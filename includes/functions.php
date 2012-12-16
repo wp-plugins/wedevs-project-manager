@@ -1,9 +1,24 @@
 <?php
+/**
+ * This file contains all the helper functions for Project Manager.
+ *
+ * @since 0.1
+ * @package CPM
+ */
 
-function cpm_get_privacy( $value ) {
-    return ($value == 0) ? __( 'Public', 'cpm' ) : __( 'Private', 'cpm' );
-}
-
+/**
+ * Filter all the tasks as pending and completed
+ *
+ * This function gets all the tasks for a tasklist and returns pending and
+ * completed tasks as an array
+ *
+ * @uses `cpm_tasks_filter_done`
+ * @uses `cpm_tasks_filter_pending`
+ *
+ * @since 0.1
+ * @param array $tasks
+ * @return array
+ */
 function cpm_tasks_filter( $tasks ) {
     $response = array(
         'completed' => array(),
@@ -18,14 +33,39 @@ function cpm_tasks_filter( $tasks ) {
     return $response;
 }
 
+/**
+ * Filter function for `cpm_tasks_filter` for completed tasks
+ *
+ * @since 0.1
+ * @param object $task
+ * @return bool
+ */
 function cpm_tasks_filter_done( $task ) {
     return $task->completed == '1';
 }
 
+/**
+ * Filter function for `cpm_tasks_filter` for pending tasks
+ *
+ * @since 0.1
+ * @param object $task
+ * @return bool
+ */
 function cpm_tasks_filter_pending( $task ) {
     return $task->completed != '1';
 }
 
+/**
+ * A user dropdown helper function.
+ *
+ * Similar to `wp_dropdown_users` function, but it is made for custom placeholder
+ * attribute and for multiple dropdown. It's mainly used in creating and editing
+ * projects.
+ *
+ * @since 0.1
+ * @param type $selected
+ * @return string
+ */
 function cpm_dropdown_users( $selected = array() ) {
 
     $placeholder = __( 'Select co-workers', 'cpm' );
@@ -46,6 +86,14 @@ function cpm_dropdown_users( $selected = array() ) {
     return $dropdown;
 }
 
+/**
+ * Helper function for converting a normal date string to unix date/time string
+ *
+ * @since 0.1
+ * @param string $date
+ * @param int $gmt
+ * @return string
+ */
 function cpm_date2mysql( $date, $gmt = 0 ) {
     $time = strtotime( $date );
     return ( $gmt ) ? gmdate( 'Y-m-d H:i:s', $time ) : gmdate( 'Y-m-d H:i:s', ( $time + ( get_option( 'gmt_offset' ) * 3600 ) ) );
@@ -54,6 +102,7 @@ function cpm_date2mysql( $date, $gmt = 0 ) {
 /**
  * Displays users as checkboxes from a project
  *
+ * @since 0.1
  * @param int $project_id
  */
 function cpm_user_checkboxes( $project_id ) {
@@ -79,6 +128,13 @@ function cpm_user_checkboxes( $project_id ) {
     return $users;
 }
 
+/**
+ * User dropdown for task
+ *
+ * @since 0.1
+ * @param int $project_id
+ * @param int $selected
+ */
 function cpm_task_assign_dropdown( $project_id, $selected = '-1' ) {
     $users = CPM_Project::getInstance()->get_users( $project_id );
 
@@ -96,6 +152,9 @@ function cpm_task_assign_dropdown( $project_id, $selected = '-1' ) {
 /**
  * Comment form upload field helper
  *
+ * Generates markup for ajax file upload list and prints attached files.
+ *
+ * @since 0.1
  * @param int $id comment ID. used for unique edit comment form pickfile ID
  * @param array $files attached files
  */
@@ -120,12 +179,14 @@ function cpm_upload_field( $id, $files = array() ) {
     <?php
 }
 
-function cpm_get_currency( $amount = 0 ) {
-    $currency = '$';
-
-    return $currency . $amount;
-}
-
+/**
+ * Helper function for formatting date field
+ *
+ * @since 0.1
+ * @param string $date
+ * @param bool $show_time
+ * @return string
+ */
 function cpm_get_date( $date, $show_time = false ) {
     $date = strtotime( $date );
 
@@ -140,17 +201,10 @@ function cpm_get_date( $date, $show_time = false ) {
     return apply_filters( 'cpm_get_date', $date_html, $date );
 }
 
-function cpm_show_errors( $errors ) {
-    echo '<ul>';
-    foreach ($errors as $msg) {
-        printf( '<li>%s</li>', cpm_show_message( $msg, 'error' ) );
-    }
-    echo '</ul>';
-}
-
 /**
  * Show info messages
  *
+ * @since 0.1
  * @param string $msg message to show
  * @param string $type message type
  */
@@ -162,6 +216,14 @@ function cpm_show_message( $msg, $type = 'cpm-updated' ) {
     <?php
 }
 
+/**
+ * Helper function to generate task list completeness progressbar
+ *
+ * @since 0.1
+ * @param int $total
+ * @param int $completed
+ * @return string
+ */
 function cpm_task_completeness( $total, $completed ) {
     //skipping vision by zero problem
     if ( $total < 1 ) {
@@ -180,6 +242,14 @@ function cpm_task_completeness( $total, $completed ) {
     return ob_get_clean();
 }
 
+/**
+ * Helper function to calcalute left milestone
+ *
+ * @since 0.1
+ * @param int $from
+ * @param int $to
+ * @return bool
+ */
 function cpm_is_left( $from, $to ) {
     $diff = $to - $from;
 
@@ -193,6 +263,7 @@ function cpm_is_left( $from, $to ) {
 /**
  * The main logging function
  *
+ * @since 0.1
  * @uses error_log
  * @param string $type type of the error. e.g: debug, error, info
  * @param string $msg
@@ -204,14 +275,37 @@ function cpm_log( $type = '', $msg = '' ) {
     }
 }
 
+/**
+ * Helper function for displaying localized numbers
+ *
+ * @since 0.1
+ * @param int $number
+ * @return string
+ */
 function cpm_get_number( $number ) {
     return number_format_i18n( $number );
 }
 
+/**
+ * Helper function for generating anchor tags
+ *
+ * @since 0.1
+ * @param string $link
+ * @param string $text
+ * @return string
+ */
 function cpm_print_url( $link, $text ) {
     return sprintf( '<a href="%s">%s</a>', $link, $text );
 }
 
+/**
+ * Displays tasks, messages, milestones contents. Mainly used for applying
+ * standard WordPress `the_content` filter.
+ *
+ * @since 0.1
+ * @param string $content
+ * @return string
+ */
 function cpm_get_content( $content ) {
     $content = apply_filters( 'the_content', $content );
     $content = str_replace( ']]>', ']]&gt;', $content );
@@ -219,17 +313,41 @@ function cpm_get_content( $content ) {
     return $content;
 }
 
+/**
+ * Helper function to include `header.php` ono project tabs
+ *
+ * @since 0.1
+ * @param string $active_menu
+ * @param int $project_id
+ */
 function cpm_get_header( $active_menu, $project_id = 0 ) {
     $cpm_active_menu = $active_menu;
 
     require_once CPM_PLUGIN_PATH . '/views/project/header.php';
 }
 
+/**
+ * Displays comment texts. Mainly used for applying `comment_text` filter
+ * on messages, tasks and to-do's comments.
+ *
+ * @since 0.1
+ * @param type $comment_ID
+ * @return string
+ */
 function cpm_comment_text( $comment_ID = 0 ) {
     $comment = get_comment( $comment_ID );
     return apply_filters( 'comment_text', get_comment_text( $comment_ID ), $comment );
 }
 
+/**
+ * Helper function for displaying excerpts
+ *
+ * @since 0.1
+ * @param string $text
+ * @param int $length
+ * @param string $append
+ * @return string
+ */
 function cpm_excerpt( $text, $length, $append = '...' ) {
     $text = wp_strip_all_tags( $text, true );
     $count = mb_strlen( $text );
@@ -242,6 +360,12 @@ function cpm_excerpt( $text, $length, $append = '...' ) {
     return $text;
 }
 
+/**
+ * Helper function for displaying data attributes on HTML tags
+ *
+ * @since 0.1
+ * @param array $values
+ */
 function cpm_data_attr( $values ) {
 
     $data = array();
@@ -252,6 +376,13 @@ function cpm_data_attr( $values ) {
     echo implode( ' ', $data );
 }
 
+/**
+ * Helper function for displaying project summary
+ *
+ * @since 0.1
+ * @param object $info
+ * @return string
+ */
 function cpm_project_summary( $info ) {
     $info_array = array();
 
@@ -281,3 +412,82 @@ function cpm_project_summary( $info ) {
 
     return implode(', ', $info_array );
 }
+
+/**
+ * Serve project files with proxy
+ *
+ * This function handles project files for privacy. It gets the file ID
+ * and project ID as input. Checks if the current user has access on that
+ * project and serves the attached file with right header type. If the
+ * request is not from a user from this project, s/he will not be able to
+ * see the file.
+ *
+ * @uses `wp_ajax_cpm_file_get` action
+ * @since 0.3
+ */
+function cpm_serve_file() {
+    $file_id = isset( $_GET['file_id'] ) ? intval( $_GET['file_id'] ) : 0;
+    $project_id = isset( $_GET['project_id'] ) ? intval( $_GET['project_id'] ) : 0;
+    $type = isset( $_GET['type'] ) ? $_GET['type'] : 'full';
+
+    //check permission
+    $pro_obj = CPM_Project::getInstance();
+    $project = $pro_obj->get( $project_id );
+    if ( !$pro_obj->has_permission( $project ) ) {
+        die( 'file access denied' );
+    }
+
+    //get file path
+    $file_path = get_attached_file( $file_id );
+    if ( !file_exists( $file_path ) ) {
+        header( "Status: 404 Not Found" );
+        die('file not found');
+    }
+
+    if ( $type == 'thumb' ) {
+        $metadata = wp_get_attachment_metadata( $file_id );
+        $filename = basename( $file_path );
+
+        //if thumbnail is found, replace file name with thumb file name
+        if ( array_key_exists( 'thumbnail', $metadata['sizes'] ) ) {
+            $file_path = str_replace( $filename, $metadata['sizes']['thumbnail']['file'], $file_path );
+        }
+    }
+
+    $extension = strtolower( substr( strrchr( $file_path, '.' ), 1 ) );
+
+    // get the file mime type using the file extension
+    switch ($extension) {
+        case 'jpeg':
+        case 'jpg':
+            $mime = 'image/jpeg';
+            break;
+
+        case 'png':
+            $mime = 'image/png';
+            break;
+
+        case 'gif':
+            $mime = 'image/gif';
+            break;
+
+        case 'bmp':
+            $mime = 'image/bmp';
+            break;
+
+        default:
+            $mime = 'application/force-download';
+    }
+
+    // serve the file with right header
+    if ( is_readable( $file_path ) ) {
+        header( 'Content-Type: ' . $mime );
+        header( 'Content-Transfer-Encoding: binary' );
+        header( 'Content-Disposition: inline; filename=' . basename( $file_path ) );
+        readfile( $file_path );
+    }
+
+    exit;
+}
+
+add_action( 'wp_ajax_cpm_file_get', 'cpm_serve_file' );

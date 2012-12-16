@@ -84,6 +84,11 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 == Changelog ==
 
+= 0.3 =
+
+* Translation capability added
+* Attachment security added. All files are now served via a proxy script
+  for security with permission checking.
 
 = 0.2.1 =
 
