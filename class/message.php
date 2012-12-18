@@ -146,6 +146,12 @@ class CPM_Message {
     /**
      * Get the attachments of a post
      *
+     * Getting attachment for a message doesn't query to attachment as
+     * post parent. But it's queried via a meta key `_parent`. This was done
+     * because, every attachments parent_id in messages and comments are set
+     * to as message ID. So that every attachments shows in media listing under
+     * the message ID.
+     *
      * @param int $post_id
      * @return array attachment list
      */
@@ -175,8 +181,10 @@ class CPM_Message {
 
                 $thumb = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
                 $att_list[$attachment->ID]['thumb'] = $thumb[0];
+                $att_list[$attachment->ID]['type'] = 'image';
             } else {
                 $att_list[$attachment->ID]['thumb'] = wp_mime_type_icon( $attachment->post_mime_type );
+                $att_list[$attachment->ID]['type'] = 'file';
             }
         }
 
@@ -195,6 +203,15 @@ class CPM_Message {
     function associate_file( $files, $parent_id, $project_id ) {
 
         foreach ($files as $file_id) {
+
+            // add message id as the parent
+            wp_update_post( array(
+                'ID' => $file_id,
+                'post_parent' => $parent_id
+            ) );
+
+            // set the _project meta in the file, so that we can find
+            // attachments by project id
             update_post_meta( $file_id, '_project', $project_id );
             update_post_meta( $file_id, '_parent', $parent_id );
         }

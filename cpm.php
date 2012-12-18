@@ -5,7 +5,7 @@
  * Description: A WordPress Project Management plugin. Simply it does everything and it was never been easier with WordPress.
  * Author: Tareq Hasan
  * Author URI: http://tareq.weDevs.com
- * Version: 0.3
+ * Version: 0.3.1
  */
 
 /**
@@ -36,12 +36,14 @@ class WeDevs_CPM {
 
     function __construct() {
 
+        $this->version = '0.3.1';
         $this->constants();
         $this->instantiate();
 
         add_action( 'admin_menu', array($this, 'admin_menu') );
         add_action( 'admin_init', array($this, 'admin_includes') );
         add_action( 'plugins_loaded', array($this, 'load_textdomain') );
+        register_activation_hook( __FILE__, array($this, 'install') );
     }
 
     /**
@@ -57,6 +59,15 @@ class WeDevs_CPM {
         $activity = new CPM_Activity();
         $ajax = new CPM_Ajax();
         $notification = new CPM_Notification();
+    }
+
+    /**
+     * Runs the setup when the plugin is installed
+     *
+     * @since 0.3.1
+     */
+    function install() {
+        update_option( 'cpm_version', $this->version );
     }
 
     /**
@@ -257,27 +268,4 @@ class WeDevs_CPM {
 
 }
 
-$cpm = new WeDevs_CPM();
-
-/**
- * Remove comments from listing publicly
- *
- * Hides all comments made on project, task_list, task, milestone, message
- * from listing on frontend, admin dashboard, and admin comments page.
- *
- * @param array $clauses
- * @return array
- */
-function cpm_hide_comments( $clauses ) {
-    global $wpdb, $pagenow;
-
-    if ( !is_admin() || $pagenow == 'edit-comments.php' || (is_admin() && $pagenow == 'index.php') ) {
-        $post_types = implode( "', '", array('project', 'task_list', 'task', 'milestone', 'message') );
-        $clauses['join'] .= " JOIN $wpdb->posts as cpm_p ON cpm_p.ID = $wpdb->comments.comment_post_ID";
-        $clauses['where'] .= " AND cpm_p.post_type NOT IN('$post_types')";
-    }
-
-    return $clauses;
-}
-
-add_filter( 'comments_clauses', 'cpm_hide_comments', 10 );
+$GLOBALS['wedevs_cpm'] = new WeDevs_CPM();

@@ -84,6 +84,13 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 == Changelog ==
 
+= 0.3.1 =
+
+* comment update bug fix
+* project activity is now grouped by date
+* "load more" button added on project activity
+* some function documentation added.
+
 = 0.3 =
 
 * Translation capability added
