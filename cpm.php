@@ -5,7 +5,34 @@
  * Description: A WordPress Project Management plugin. Simply it does everything and it was never been easier with WordPress.
  * Author: Tareq Hasan
  * Author URI: http://tareq.weDevs.com
- * Version: 0.3.1
+ * Version: 0.4
+ * License: GPL2
+ */
+
+/**
+ * Copyright (c) 2013 Tareq Hasan (email: tareq@wedevs.com). All rights reserved.
+ *
+ * Released under the GPL license
+ * http://www.opensource.org/licenses/gpl-license.php
+ *
+ * This is an add-on for WordPress
+ * http://wordpress.org/
+ *
+ * **********************************************************************
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * **********************************************************************
  */
 
 /**
@@ -36,7 +63,9 @@ class WeDevs_CPM {
 
     function __construct() {
 
-        $this->version = '0.3.1';
+        $this->version = '0.4';
+        $this->db_version = '0.3.1';
+
         $this->constants();
         $this->instantiate();
 
@@ -47,18 +76,24 @@ class WeDevs_CPM {
     }
 
     /**
-     * Instantiate all th required classes
+     * Instantiate all the required classes
      *
      * @since 0.1
      */
     function instantiate() {
-        $project = CPM_Project::getInstance();
-        $message = CPM_Message::getInstance();
-        $task = CPM_Task::getInstance();
-        $milestone = CPM_Milestone::getInstance();
-        $activity = new CPM_Activity();
-        $ajax = new CPM_Ajax();
-        $notification = new CPM_Notification();
+        CPM_Project::getInstance();
+        CPM_Message::getInstance();
+        CPM_Task::getInstance();
+        CPM_Milestone::getInstance();
+        
+        new CPM_Activity();
+        new CPM_Ajax();
+        new CPM_Notification();
+        
+        // instantiate admin settings only on admin page
+        if ( is_admin() ) {
+            new CPM_Admin();
+        }
     }
 
     /**
@@ -68,6 +103,7 @@ class WeDevs_CPM {
      */
     function install() {
         update_option( 'cpm_version', $this->version );
+        update_option( 'cpm_db_version', $this->db_version );
     }
 
     /**
@@ -101,6 +137,8 @@ class WeDevs_CPM {
      * @since 0.1
      */
     function admin_scripts() {
+        $upload_size = intval( cpm_get_option( 'upload_limit') ) * 1024 * 1024;
+        
         wp_enqueue_script( 'jquery-ui-core' );
         wp_enqueue_script( 'jquery-ui-dialog' );
         wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -117,7 +155,7 @@ class WeDevs_CPM {
             'plupload' => array(
                 'browse_button' => 'cpm-upload-pickfiles',
                 'container' => 'cpm-upload-container',
-                'max_file_size' => wp_max_upload_size() . 'b',
+                'max_file_size' => $upload_size . 'b',
                 'url' => admin_url( 'admin-ajax.php' ) . '?action=cpm_ajax_upload&nonce=' . wp_create_nonce( 'cpm_ajax_upload' ),
                 'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ),
                 'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
@@ -166,7 +204,7 @@ class WeDevs_CPM {
     function admin_page_handler() {
 
         echo '<div class="wrap cpm">';
-
+        
         $page = (isset( $_GET['page'] )) ? $_GET['page'] : '';
         $tab = (isset( $_GET['tab'] )) ? $_GET['tab'] : '';
         $action = (isset( $_GET['action'] )) ? $_GET['action'] : '';
@@ -268,4 +306,20 @@ class WeDevs_CPM {
 
 }
 
-$GLOBALS['wedevs_cpm'] = new WeDevs_CPM();
+$wedevs_cpm = new WeDevs_CPM();
+
+/**
+ * Add filters for text displays on Project Manager texts
+ *
+ * @since 0.4
+ */
+function cpm_content_filter() {
+    add_filter( 'cpm_get_content', 'wptexturize' );
+    add_filter( 'cpm_get_content', 'convert_smilies' );
+    add_filter( 'cpm_get_content', 'convert_chars' );
+    add_filter( 'cpm_get_content', 'wpautop' );
+    add_filter( 'cpm_get_content', 'shortcode_unautop' );
+    add_filter( 'cpm_get_content', 'prepend_attachment' );
+}
+
+add_action( 'plugins_loaded', 'cpm_content_filter' );

@@ -30,6 +30,7 @@
             $('.cpm-comment-wrap').on('click', '.cpm-delete-comment-link', this.Comment.deleteComment);
             $('.cpm-comment-wrap').on('submit', '.cpm-comment-form', this.Comment.update);
             $('.cpm-comment-wrap').on('click', '.cpm-delete-file', this.Uploader.deleteFile);
+            $('.cpm-comment-form-wrap').on('click', '.cpm-delete-file', this.Uploader.deleteFile);
 
             // add new commenttoggleForm
             $('.cpm-comment-form').validate({
@@ -38,6 +39,14 @@
 
                     return false;
                 }
+            });
+            
+            // toggle all user notification checkbox
+            $('.cpm').on('click', '.cpm-toggle-checkbox', function(e) {
+                e.preventDefault();
+                
+                var $checkBoxes = $('.notify-users').find('input[type=checkbox][name="notify_user[]"]')
+                $checkBoxes.prop('checked', !$checkBoxes.prop('checked'));
             });
 
 
