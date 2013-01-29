@@ -12,7 +12,7 @@ A WordPress Project Management plugin. Manage your project simply with the *righ
 
 == Description ==
 
-A WordPress Project Management plugin. Manage your project simply with the \*right\* tools and options. It gives you the test of basecamp, just inside your loved WordPress.
+A WordPress Project Management plugin. Manage your project simply with the \*right\* tools and options. It gives you the taste of basecamp, just inside your loved WordPress.
 
 = Features =
  * Projects
