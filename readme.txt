@@ -39,6 +39,9 @@ A WordPress Project Management plugin. Manage your project simply with the \*rig
 = Demo Video =
 [youtube http://www.youtube.com/watch?v=lR61ARrGb28]
 
+== Extensions ==
+* [WP Project Manger Frontend](http://wedevs.com/plugin/wp-project-manager-frontend/) (*premium*) - brings the plugin functionality to your site frontend.
+
 = Contribute =
 This may have bugs and lack of many features. If you want to contribute on this project, you are more than welcome. Please fork the repository from [Github](https://github.com/tareq1988/wp-project-manager).
 
