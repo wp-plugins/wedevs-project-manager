@@ -36,8 +36,11 @@ A WordPress Project Management plugin. Manage your project simply with the \*rig
  * Files
    * See all the uploaded files on messages and comments in one place and navigate to invidual attached threads.
 
-= Demo Video =
+= Quick Demo Video =
 [youtube http://www.youtube.com/watch?v=tETwpwjSA4Q]
+
+= Detailed Walkthrough =
+[youtube http://www.youtube.com/watch?v=lR61ARrGb28]
 
 = Extensions =
 * [WP Project Manger Frontend](http://wedevs.com/plugin/wp-project-manager-frontend/) (*premium*) - brings the plugin functionality to your site frontend.
