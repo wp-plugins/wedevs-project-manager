@@ -51,7 +51,7 @@ This may have bugs and lack of many features. If you want to contribute on this 
 = Author =
 Brought to you by [Tareq Hasan](http://tareq.wedevs.com) from [weDevs](http://wedevs.com)
 
-= Donate ==
+= Donate =
 Please [donate](http://tareq.wedevs.com/donate/) for this awesome plugin to continue it's development to bring more awesome features.
 
 == Installation ==
