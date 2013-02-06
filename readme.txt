@@ -1,6 +1,6 @@
 === WP Project Manager ===
 Contributors: tareq1988
-Donate Link: http://tareq.wedevs.com/
+Donate Link: http://tareq.wedevs.com/donate/
 Tags: project, manager, project manager, project management, todo, todo list, task, basecamp, milestone, message, file, comment, client, team, tracking, planning, lists, reporting
 Requires at least: 3.3
 Tested up to: 3.5
@@ -50,6 +50,9 @@ This may have bugs and lack of many features. If you want to contribute on this 
 
 = Author =
 Brought to you by [Tareq Hasan](http://tareq.wedevs.com) from [weDevs](http://wedevs.com)
+
+= Donate ==
+Please [donate](http://tareq.wedevs.com/donate/) for this awesome plugin to continue it's development to bring more awesome features.
 
 == Installation ==
 
