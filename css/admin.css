@@ -60,6 +60,7 @@ ul.cpm-activity ul{margin-left:15px;margin-bottom:10px;}ul.cpm-activity ul li{te
 .cpm-projects .cpm-project .cpm-project-detail,.cpm-projects .cpm-project .cpm-project-meta{color:#AA9C84;word-wrap:break-word;font-size:16px;margin-bottom:5px;}
 .cpm-projects .cpm-project .cpm-project-meta{font-size:12px;}
 .cpm-projects .cpm-project .cpm-project-people{position:absolute;bottom:15px;left:16px;}.cpm-projects .cpm-project .cpm-project-people img.avatar{height:48px;width:48px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;margin-right:5px;}
+.cpm-projects .cpm-project .cpm-progress{position:absolute;bottom:0px;height:10px;width:100%;-webkit-border-radius:0 0 3px 3px;-moz-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;margin:0 15px 0 -15px;}.cpm-projects .cpm-project .cpm-progress .text{font-size:8px;margin-top:-23px;color:#fff;text-shadow:none;}
 .cpm-new-message-form{margin:25px 0 15px 10px;display:none;}
 .cpm-message-form-wrap{position:relative;border:1px solid #DDD;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;padding:10px;margin-left:0;width:500px;}
 .cpm-messages-table{font-size:13px;}.cpm-messages-table td{border-bottom:1px solid #ECECEC;padding:5px 0;}
@@ -120,8 +121,11 @@ ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .cpm-todo-content .cp
 ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .cpm-todo-content .cpm-assigned-user,ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .cpm-todo-content .cpm-due-date{-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background:#ddd;font-size:12px;line-height:12px;padding:1px 7px;color:#999;margin-right:5px;}
 ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .cpm-todo-content .cpm-completed-by{font-size:11px;color:#999;}
 ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .cpm-task-edit-form{display:none;}
+ul.cpm-todolists article.cpm-todolist>ul li .cpm-todo-wrap .move{background:url('../images/move.png') no-repeat;cursor:move;width:12px;height:12px;display:inline-block;}
+ul.cpm-todolists article.cpm-todolist>ul .ui-state-highlight{height:1.5em;line-height:1.2em;}
 ul.cpm-todolists article.cpm-todolist ul.cpm-todo-completed .cpm-todo-wrap .cpm-todo-action{left:-21px;}
 ul.cpm-todolists article.cpm-todolist ul.cpm-todo-completed .cpm-todo-wrap .cpm-todo-content a{font-size:11px;line-height:14px;color:#999;}
+ul.cpm-todolists article.cpm-todolist ul.cpm-todo-completed .cpm-todo-wrap .move{display:none;}
 ul.cpm-todolists>li{margin:-10px 0 10px;padding:10px 0;}
 .cpm-new-milestone-form{margin:25px 0 15px 10px;display:none;}
 .cpm-milestone-form-wrap{position:relative;border:1px solid #DDD;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;padding:10px;margin-left:0;width:500px;background:#fff;}.cpm-milestone-form-wrap input[name="milestone_due"]{width:20%;}

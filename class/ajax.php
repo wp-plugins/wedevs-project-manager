@@ -23,6 +23,7 @@ class CPM_Ajax {
         add_action( 'wp_ajax_cpm_task_delete', array($this, 'delete_task') );
         add_action( 'wp_ajax_cpm_task_add', array($this, 'add_new_task') );
         add_action( 'wp_ajax_cpm_task_update', array($this, 'update_task') );
+        add_action( 'wp_ajax_cpm_task_order', array($this, 'task_save_order') );
 
         add_action( 'wp_ajax_cpm_add_list', array($this, 'add_tasklist') );
         add_action( 'wp_ajax_cpm_update_list', array($this, 'update_tasklist') );
@@ -96,7 +97,7 @@ class CPM_Ajax {
         $posted = $_POST;
 
         $project_id = isset( $posted['project_id'] ) ? intval( $posted['project_id'] ) : 0;
-        CPM_Project::getInstance()->delete( $project_id );
+        CPM_Project::getInstance()->delete( $project_id, true );
 
         echo json_encode( array(
             'success' => true,
@@ -156,6 +157,17 @@ class CPM_Ajax {
         echo json_encode( $response );
         exit;
     }
+    
+    function task_save_order() {
+
+        if ( $_POST['items'] ) {
+            foreach ($_POST['items'] as $index => $task_id) {
+                wp_update_post( array('ID' => $task_id, 'menu_order' => $index) );
+            }
+        }
+        
+        exit;
+    }
 
     function mark_task_complete() {
         check_ajax_referer( 'cpm_nonce' );
@@ -213,7 +225,7 @@ class CPM_Ajax {
         $project_id = (int) $_POST['project_id'];
 
         $task_obj = CPM_Task::getInstance();
-        $task_obj->delete_task( $task_id );
+        $task_obj->delete_task( $task_id, true );
         $complete = $task_obj->get_completeness( $list_id );
 
         echo json_encode( array(
@@ -281,7 +293,7 @@ class CPM_Ajax {
     function delete_tasklist() {
         check_ajax_referer( 'cpm_nonce' );
 
-        CPM_Task::getInstance()->delete_list( $_POST['list_id'] );
+        CPM_Task::getInstance()->delete_list( $_POST['list_id'], true );
 
         echo json_encode( array(
             'success' => true
@@ -340,7 +352,7 @@ class CPM_Ajax {
 
         $milestone_id = (int) $_POST['milestone_id'];
 
-        $this->_milestone_obj->delete( $milestone_id );
+        $this->_milestone_obj->delete( $milestone_id, true );
         echo json_encode( array(
             'success' => true
         ) );
@@ -503,7 +515,7 @@ class CPM_Ajax {
         check_ajax_referer( 'cpm_nonce' );
 
         $comment_id = isset( $_POST['comment_id'] ) ? intval( $_POST['comment_id'] ) : 0;
-        CPM_Comment::getInstance()->delete( $comment_id );
+        CPM_Comment::getInstance()->delete( $comment_id, true );
 
         echo json_encode( array(
             'success' => true
@@ -584,7 +596,7 @@ class CPM_Ajax {
         $project_id = isset( $posted['project_id'] ) ? intval( $posted['project_id'] ) : 0;
         $message_id = isset( $posted['message_id'] ) ? intval( $posted['message_id'] ) : 0;
 
-        CPM_Message::getInstance()->delete( $message_id );
+        CPM_Message::getInstance()->delete( $message_id, true );
 
         echo json_encode( array(
             'success' => true,

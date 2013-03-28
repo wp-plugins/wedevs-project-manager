@@ -3,7 +3,7 @@ Contributors: tareq1988
 Donate Link: http://tareq.wedevs.com/donate/
 Tags: project, manager, project manager, project management, todo, todo list, task, basecamp, milestone, message, file, comment, client, team, tracking, planning, lists, reporting
 Requires at least: 3.3
-Tested up to: 3.5
+Tested up to: 3.5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -54,6 +54,11 @@ Brought to you by [Tareq Hasan](http://tareq.wedevs.com) from [weDevs](http://we
 = Donate =
 Please [donate](http://tareq.wedevs.com/donate/) for this awesome plugin to continue it's development to bring more awesome features.
 
+= Contribution =
+* French translation by Corentin allard
+* Dutch translation by eskamedia
+* Brazilian Portuguese translation by Anderson
+
 == Installation ==
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
@@ -92,6 +97,17 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 10. All attached files from message, comment, to-do can be found here.
 
 == Changelog ==
+
+= 0.4.2 = 
+
+* bug fix: project activity/comments on frontend widget
+* bug fix: project activity/comments on comment rss
+* bug fix: number of milestones
+* improved: plugin textdomain loading
+* new: project task progressbar on project listing
+* new: task sorting
+* new: Dutch translation language added
+* new: Brazilian Portuguese language added
 
 = 0.4.1 =
 

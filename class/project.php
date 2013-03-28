@@ -295,7 +295,7 @@ class CPM_Project {
             cpm_url_file_index( $project_id ) => __( 'Files', 'cpm' ),
         );
 
-        return apply_filters( 'cpm_project_nav_links', $links );
+        return apply_filters( 'cpm_project_nav_links', $links, $project_id );
     }
 
     /**
@@ -356,6 +356,26 @@ class CPM_Project {
         }
 
         return false;
+    }
+    
+    function get_progress_by_tasks( $project_id ) {
+        global $wpdb;
+        
+        $sql = "SELECT m.meta_value as completed FROM $wpdb->posts p 
+            LEFT JOIN $wpdb->postmeta m ON p.ID = m.post_id
+            WHERE post_parent IN(
+                    SELECT ID FROM $wpdb->posts WHERE post_parent = $project_id AND post_status = 'publish' AND post_type = 'task_list'
+            ) AND p.post_status = 'publish' AND p.post_type = 'task' AND m.meta_key = '_completed'
+            ORDER BY m.meta_value";
+        
+        $result = $wpdb->get_results($sql);
+        $response = array(
+            'total' => count($result),
+            'pending' => count(array_filter( $result, 'cpm_tasks_filter_pending' )),
+            'completed' => count(array_filter( $result, 'cpm_tasks_filter_done' ))
+        );
+        
+        return $response;
     }
 
 }

@@ -474,6 +474,22 @@ ul.cpm-activity {
                 margin-right: 5px;
             }
         }
+
+        .cpm-progress {
+            position: absolute;
+            bottom: 0px;
+            height: 10px;
+            width: 100%;
+            .border-radius(0 0 3px 3px);
+            margin: 0 15px 0 -15px;
+
+            .text {
+                font-size: 8px;
+                margin-top: -23px;
+                color: #fff;
+                text-shadow: none;
+            }
+        }
     }
 }
 
@@ -1043,8 +1059,18 @@ ul.cpm-todolists {
                     .cpm-task-edit-form {
                         display: none;
                     }
+
+                    .move {
+                        background: url('../images/move.png') no-repeat;
+                        cursor: move;
+                        width: 12px;
+                        height: 12px;
+                        display: inline-block;
+                    }
                 }
             }
+
+            .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
         }
 
         ul.cpm-todo-completed {
@@ -1058,6 +1084,10 @@ ul.cpm-todolists {
                     font-size: 11px;
                     line-height: 14px;
                     color: #999;
+                }
+
+                .move {
+                    display: none;
                 }
             }
         }

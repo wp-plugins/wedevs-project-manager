@@ -5,7 +5,7 @@
  * Description: A WordPress Project Management plugin. Simply it does everything and it was never been easier with WordPress.
  * Author: Tareq Hasan
  * Author URI: http://tareq.weDevs.com
- * Version: 0.4.1
+ * Version: 0.4.2
  * License: GPL2
  */
 
@@ -53,6 +53,8 @@ function cpm_autoload( $class ) {
 }
 
 spl_autoload_register( 'cpm_autoload' );
+
+require_once dirname( __FILE__ ) . '/includes/functions.php';
 
 /**
  * Project Manager bootstrap class
@@ -112,12 +114,7 @@ class WeDevs_CPM {
      * @since 0.3
      */
     function load_textdomain() {
-        $locale = apply_filters( 'cpm_locale', get_locale() );
-        $mofile = dirname( __FILE__ ) . "/languages/cpm-$locale.mo";
-
-        if ( file_exists( $mofile ) ) {
-            load_textdomain( 'cpm', $mofile );
-        }
+        load_plugin_textdomain( 'cpm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
     /**
@@ -142,6 +139,7 @@ class WeDevs_CPM {
         wp_enqueue_script( 'jquery-ui-core' );
         wp_enqueue_script( 'jquery-ui-dialog' );
         wp_enqueue_script( 'jquery-ui-datepicker' );
+        wp_enqueue_script( 'jquery-ui-sortable' );
         wp_enqueue_script( 'chosen', plugins_url( 'js/chosen.jquery.min.js', __FILE__ ) );
         wp_enqueue_script( 'validate', plugins_url( 'js/jquery.validate.min.js', __FILE__ ) );
         wp_enqueue_script( 'plupload-handlers' );
@@ -175,7 +173,6 @@ class WeDevs_CPM {
      * @since 0.1
      */
     function admin_includes() {
-        require_once CPM_PLUGIN_PATH . '/includes/functions.php';
         require_once CPM_PLUGIN_PATH . '/includes/urls.php';
         require_once CPM_PLUGIN_PATH . '/includes/html.php';
         require_once CPM_PLUGIN_PATH . '/includes/shortcodes.php';
@@ -214,6 +211,8 @@ class WeDevs_CPM {
         $tasklist_id = (isset( $_GET['tl_id'] )) ? (int) $_GET['tl_id'] : 0;
         $task_id = (isset( $_GET['task_id'] )) ? (int) $_GET['task_id'] : 0;
         $milestone_id = (isset( $_GET['ml_id'] )) ? (int) $_GET['ml_id'] : 0;
+        
+        $default_file = dirname( __FILE__ ) . '/views/project/index.php';
 
         switch ($page) {
             case 'cpm_projects':
@@ -223,15 +222,15 @@ class WeDevs_CPM {
 
                         switch ($action) {
                             case 'index':
-                                include_once dirname( __FILE__ ) . '/views/project/index.php';
+                                $file = dirname( __FILE__ ) . '/views/project/index.php';
                                 break;
 
                             case 'single':
-                                include_once dirname( __FILE__ ) . '/views/project/single.php';
+                                $file = dirname( __FILE__ ) . '/views/project/single.php';
                                 break;
 
                             default:
-                                include_once dirname( __FILE__ ) . '/views/project/index.php';
+                                $file = dirname( __FILE__ ) . '/views/project/index.php';
                                 break;
                         }
 
@@ -240,15 +239,15 @@ class WeDevs_CPM {
                     case 'message':
                         switch ($action) {
                             case 'index':
-                                include_once dirname( __FILE__ ) . '/views/message/index.php';
+                                $file = dirname( __FILE__ ) . '/views/message/index.php';
                                 break;
 
                             case 'single':
-                                include_once dirname( __FILE__ ) . '/views/message/single.php';
+                                $file = dirname( __FILE__ ) . '/views/message/single.php';
                                 break;
 
                             default:
-                                include_once dirname( __FILE__ ) . '/views/message/index.php';
+                                $file = dirname( __FILE__ ) . '/views/message/index.php';
                                 break;
                         }
 
@@ -257,19 +256,19 @@ class WeDevs_CPM {
                     case 'task':
                         switch ($action) {
                             case 'index':
-                                include_once dirname( __FILE__ ) . '/views/task/index.php';
+                                $file = dirname( __FILE__ ) . '/views/task/index.php';
                                 break;
 
                             case 'single':
-                                include_once dirname( __FILE__ ) . '/views/task/single.php';
+                                $file = dirname( __FILE__ ) . '/views/task/single.php';
                                 break;
 
                             case 'task_single':
-                                include_once dirname( __FILE__ ) . '/views/task/task-single.php';
+                                $file = dirname( __FILE__ ) . '/views/task/task-single.php';
                                 break;
 
                             default:
-                                include_once dirname( __FILE__ ) . '/views/task/index.php';
+                                $file = dirname( __FILE__ ) . '/views/task/index.php';
                                 break;
                         }
 
@@ -278,29 +277,38 @@ class WeDevs_CPM {
                     case 'milestone':
                         switch ($action) {
                             case 'index':
-                                include_once dirname( __FILE__ ) . '/views/milestone/index.php';
+                                $file = dirname( __FILE__ ) . '/views/milestone/index.php';
                                 break;
 
                             default:
-                                include_once dirname( __FILE__ ) . '/views/milestone/index.php';
+                                $file = dirname( __FILE__ ) . '/views/milestone/index.php';
                                 break;
                         }
 
                         break;
 
                     case 'files':
-                        include_once dirname( __FILE__ ) . '/views/files/index.php';
+                        $file = dirname( __FILE__ ) . '/views/files/index.php';
                         break;
 
 
                     default:
-                        include_once dirname( __FILE__ ) . '/views/project/index.php';
+                        $file = dirname( __FILE__ ) . '/views/project/index.php';
                         break;
                 }
 
             default:
                 break;
         }
+        
+        $file = apply_filters( 'cpm_tab_file', $file, $project_id );
+        
+        if ( file_exists( $file )) {
+            require_once $file;
+        } else {
+            require_once $default_file;
+        }
+        
         echo '</div>';
     }
 
