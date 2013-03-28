@@ -105,6 +105,7 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 * bug fix: number of milestones
 * improved: plugin textdomain loading
 * new: project task progressbar on project listing
+* new: tasklist sorting
 * new: task sorting
 * new: Dutch translation language added
 * new: Brazilian Portuguese language added
