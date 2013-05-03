@@ -5,7 +5,7 @@
  * Description: A WordPress Project Management plugin. Simply it does everything and it was never been easier with WordPress.
  * Author: Tareq Hasan
  * Author URI: http://tareq.weDevs.com
- * Version: 0.4.2
+ * Version: 0.4.3
  * License: GPL2
  */
 
@@ -301,7 +301,7 @@ class WeDevs_CPM {
                 break;
         }
         
-        $file = apply_filters( 'cpm_tab_file', $file, $project_id );
+        $file = apply_filters( 'cpm_tab_file', $file, $project_id, $page, $tab, $action );
         
         if ( file_exists( $file )) {
             require_once $file;

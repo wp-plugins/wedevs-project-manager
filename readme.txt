@@ -58,6 +58,9 @@ Please [donate](http://tareq.wedevs.com/donate/) for this awesome plugin to cont
 * French translation by Corentin allard
 * Dutch translation by eskamedia
 * Brazilian Portuguese translation by Anderson
+* German translation by Alexander Pfabe
+* Spanish translation by Luigi Libet
+* Indonesian translation by hirizh
 
 == Installation ==
 
@@ -97,6 +100,15 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 10. All attached files from message, comment, to-do can be found here.
 
 == Changelog ==
+
+= 0.4.3 = 
+
+* new: Spanish translation
+* new: German translation
+* new: Indonesian translation
+* fix: milestone datepicker issue
+* fix: some typo fixes
+* improved: comment count next to tasklists
 
 = 0.4.2 = 
 
