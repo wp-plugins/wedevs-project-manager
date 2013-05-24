@@ -58,9 +58,10 @@ Please [donate](http://tareq.wedevs.com/donate/) for this awesome plugin to cont
 * French translation by Corentin allard
 * Dutch translation by eskamedia
 * Brazilian Portuguese translation by Anderson
-* German translation by Alexander Pfabe
+* German translation by Alexander Pfabel
 * Spanish translation by Luigi Libet
 * Indonesian translation by hirizh
+* Polish translation by Jacek Synowiec
 
 == Installation ==
 
@@ -101,7 +102,7 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 == Changelog ==
 
-= 0.4.3 = 
+= 0.4.3 =
 
 * new: Spanish translation
 * new: German translation
@@ -110,7 +111,7 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 * fix: some typo fixes
 * improved: comment count next to tasklists
 
-= 0.4.2 = 
+= 0.4.2 =
 
 * bug fix: project activity/comments on frontend widget
 * bug fix: project activity/comments on comment rss
@@ -124,7 +125,7 @@ A. Found any bugs? Please create an [issue](https://github.com/tareq1988/wp-proj
 
 = 0.4.1 =
 
-* bug fix: attachment association problem on comment update 
+* bug fix: attachment association problem on comment update
 * bug fix: error on message update
 
 = 0.4 =
